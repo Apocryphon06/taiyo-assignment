@@ -22,9 +22,9 @@ const CreateContact = ({ edit }: any) => {
 
   useEffect(() => {
     setParams({
-      firstName: state.firstName,
-      lastName: state.lastName,
-      status: state.status,
+      firstName: state?.firstName,
+      lastName: state?.lastName,
+      status: state?.status,
     });
   }, [state]);
 

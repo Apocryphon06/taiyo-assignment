@@ -7,7 +7,7 @@ import Sidebar from "../Sidebar";
 
 const Charts = () => {
   const [content, setContent] = useState(true);
-
+  
   const toggle = () => {
     setContent(!content);
   };
@@ -25,13 +25,9 @@ const Charts = () => {
 
   console.log(data, "line graph data using react query");
 
-  let casesDataPoints = [] as any;
+  
 
-  const [cases, setCases] = useState(
-    Object.entries(data.cases).map((item) =>
-    casesDataPoints.push({ x: item[0], y: item[1] })
-    )
-  );
+  const [cases, setCases] = useState([] as any);
   const [deaths, setDeaths] = useState([] as any);
   const [recovered, setRecovered] = useState([] as any);
 
@@ -70,7 +66,6 @@ const Charts = () => {
   // useEffect(() => {
   //   getData();
   // }, []);
-
   if (error) {
     return <p>Error occured</p>;
   }
