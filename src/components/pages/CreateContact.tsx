@@ -71,7 +71,7 @@ const CreateContact = ({ edit }: any) => {
             name="lastName"
           />
 
-          <div className="flex items-center lg:gap-[85px] md:justify-between gap-12">
+          <div className="flex items-center lg:gap-[85px] lg:justify-start md:justify-between gap-12">
             <p className="text-primary font-medium">Status</p>
 
             <div className="w-[100px]">

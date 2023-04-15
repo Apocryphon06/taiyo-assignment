@@ -1,24 +1,44 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import LineChart from "../ApexLineChart";
 import LeafletMap from "../LeafletMap";
 import Sidebar from "../Sidebar";
 
 const Charts = () => {
   const [content, setContent] = useState(true);
+
   const toggle = () => {
     setContent(!content);
   };
 
-  const [cases, setCases] = useState([] as any);
+  const {
+    data: data,
+    error: error,
+    isLoading: isLoading,
+  } = useQuery("getGraphData", async () => {
+    const res = await fetch(
+      "https://disease.sh/v3/covid-19/historical/all?lastdays=all"
+    );
+    return res.json();
+  });
+
+  console.log(data, "line graph data using react query");
+
+  let casesDataPoints = [] as any;
+
+  const [cases, setCases] = useState(
+    Object.entries(data.cases).map((item) =>
+    casesDataPoints.push({ x: item[0], y: item[1] })
+    )
+  );
   const [deaths, setDeaths] = useState([] as any);
   const [recovered, setRecovered] = useState([] as any);
 
-  const getData = () => {
+  const getData = async () => {
     axios
       .get("https://disease.sh/v3/covid-19/historical/all?lastdays=all")
       .then((response) => {
-        // console.log(response);
         let { cases, deaths, recovered } = response.data;
 
         let casesDataPoints = [] as any;
@@ -37,39 +57,26 @@ const Charts = () => {
           recoveredDataPoints.push({ x: item[0], y: item[1] })
         );
 
-        // console.log(casesDataPoints, "casesDataPoints");
-        // console.log(deathsDataPoints, "deathsDataPoints");
-        // console.log(recoveredDataPoints, "recoveredDataPoints");
-
         setCases(casesDataPoints);
         setDeaths(deathsDataPoints);
         setRecovered(recoveredDataPoints);
-
-        // let casesData = [] as any;
-
-        // Object.entries(cases).map((item: any) => casesData.push(item[1]));
-        // // setCases(casesData);
-
-        // let deathsData = [] as any;
-        // Object.entries(deaths).map((item: any) => deathsData.push(item[1]));
-        // // setDeaths(deathsData);
-
-        // let recoveredData = [] as any;
-        // Object.entries(recovered).map((item: any) => recoveredData.push(item[1]));
-        // // setRecovered(recoveredData);
-
-        // console.log(casesData, "casesData");
-        // console.log(deathsData, "deathsData");
-        // console.log(recoveredData, "recoveredData");
+        console.log(recoveredDataPoints);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
+  if (error) {
+    return <p>Error occured</p>;
+  }
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="flex lg:flex-row flex-col">

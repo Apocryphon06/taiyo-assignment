@@ -1,46 +1,53 @@
 import { nanoid } from "nanoid";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import Card from "../Card";
 import Sidebar from "../Sidebar";
 import notfound from "../assets/notFound.svg";
 
-const details = [
-  {
-    id: nanoid(),
-    firstName: "Hrithik",
-    lastName: "Chandrashekar",
-    status: "Inactive",
-  },
-  {
-    id: nanoid(),
-    firstName: "Nishchal",
-    lastName: "Chandrashekar",
-    status: "Inactive",
-  },
-  {
-    id: nanoid(),
-    firstName: "John",
-    lastName: "Doe",
-    status: "Active",
-  },
-  {
-    id: nanoid(),
-    firstName: "Donald",
-    lastName: "Harris",
-    status: "Inactive",
-  },
-  {
-    id: nanoid(),
-    firstName: "Nick",
-    lastName: "Cage",
-    status: "Active",
-  },
-];
-
 const Contacts = () => {
   const navigate = useNavigate();
+  
+  const [details, setDetails] = useState([
+    {
+      id: nanoid(),
+      firstName: "Hrithik",
+      lastName: "Chandrashekar",
+      status: "Inactive",
+    },
+    {
+      id: nanoid(),
+      firstName: "Nishchal",
+      lastName: "Chandrashekar",
+      status: "Inactive",
+    },
+    {
+      id: nanoid(),
+      firstName: "John",
+      lastName: "Doe",
+      status: "Active",
+    },
+    {
+      id: nanoid(),
+      firstName: "Donald",
+      lastName: "Harris",
+      status: "Inactive",
+    },
+    {
+      id: nanoid(),
+      firstName: "Nick",
+      lastName: "Cage",
+      status: "Active",
+    },
+  ]);
+
+  const deleteContact = (id: any) => {
+    let index = details.findIndex((i) => i.id === id);
+    let temp = details.filter((item) => item.id !== id);
+    // console.log(temp, "filtered");
+    setDetails(temp);
+  };
 
   return (
     <div className="flex lg:flex-row flex-col">
@@ -58,10 +65,14 @@ const Contacts = () => {
         </p>
 
         <div className="flex flex-col justify-center items-center lg:m-0 m-5">
-          {true ? (
+          {details.length > 0 ? (
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-5 mt-10 ">
               {details.map((item: any) => (
-                <Card details={item} key={nanoid()} />
+                <Card
+                  details={item}
+                  key={nanoid()}
+                  deleteContact={() => deleteContact(item?.id)}
+                />
               ))}
             </div>
           ) : (
