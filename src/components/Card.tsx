@@ -1,8 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+import { removeContact } from "./middleware/store";
 
-const Card = ({ details,deleteContact }: any) => {
+const Card = ({ details, deleteContact }: any) => {
+  const dispatch = useDispatch();
+
   return (
     <div className="lg:w-[300px] w-[250px] border border-grayLight p-5 rounded shadow-md">
       <p className="text-base text-primary">
@@ -12,7 +16,13 @@ const Card = ({ details,deleteContact }: any) => {
         <Link to="/contacts/edit" state={details} className="w-full">
           <Button text="edit" variant="edit" />
         </Link>
-        <Button onClick={deleteContact} text="delete" variant="delete" />
+        <Button
+          onClick={() => {
+            dispatch(removeContact(details?.id));
+          }}
+          text="delete"
+          variant="delete"
+        />
       </div>
     </div>
   );

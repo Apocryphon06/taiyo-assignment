@@ -4,6 +4,9 @@ import Button from "../Button";
 import Input from "../Input";
 import RadioButton from "../RadioButton";
 import { Link, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addContact } from "../middleware/store";
+import { updateContact } from "../middleware/store";
 
 const radioItems = [
   {
@@ -19,6 +22,8 @@ const radioItems = [
 const CreateContact = ({ edit }: any) => {
   const { state } = useLocation();
   console.log(state, "from edit route");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setParams({
@@ -44,6 +49,14 @@ const CreateContact = ({ edit }: any) => {
 
   const handleRadio = (e: any) => {
     setParams({ ...params, status: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    dispatch(addContact(params));
+  };
+
+  const handleUpdate = () => {
+    dispatch(updateContact({ ...params, id: state.id }));
   };
 
   return (
@@ -87,6 +100,7 @@ const CreateContact = ({ edit }: any) => {
           <div className="flex justify-center items-center">
             <Link to="/contacts">
               <Button
+                onClick={edit ? handleUpdate : handleSubmit}
                 text={edit ? "Update" : "Submit"}
                 width="lg:w-[300px] rounded"
               />
