@@ -85,7 +85,7 @@ const CreateContact = ({ edit }: any) => {
           </div>
 
           <div className="flex justify-center items-center">
-            <Link to="/contacts">
+            <Link to="/contacts" state={params}>
               <Button
                 text={edit ? "Update" : "Submit"}
                 width="lg:w-[300px] rounded"
