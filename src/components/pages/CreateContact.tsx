@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import Button from "../Button";
 import Input from "../Input";
 import RadioButton from "../RadioButton";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const radioItems = [
   {
@@ -17,10 +17,21 @@ const radioItems = [
 ];
 
 const CreateContact = ({ edit }: any) => {
+  const { state } = useLocation();
+  console.log(state, "from edit route");
+
+  useEffect(() => {
+    setParams({
+      firstName: state.firstName,
+      lastName: state.lastName,
+      status: state.status,
+    });
+  }, [state]);
+
   const initialStates = {
     firstName: "",
     lastName: "",
-    status: "Active",
+    status: "",
   };
 
   const [params, setParams] = useState(initialStates);
@@ -31,15 +42,19 @@ const CreateContact = ({ edit }: any) => {
     setParams({ ...params, [name]: value });
   };
 
+  const handleRadio = (e: any) => {
+    setParams({ ...params, status: e.target.value });
+  };
+
   return (
-    <div className="flex flex-row">
+    <div className="flex lg:flex-row flex-col">
       <Sidebar />
       <div className="lg:w-[1190px] w-full">
         <p className="text-center text-lg font-medium text-primary p-4 uppercase tracking-widest">
           {edit ? "Edit Contact" : "Create Contact"}
         </p>
 
-        <div className="border border-primary lg:w-[450px] m-auto p-4 rounded flex flex-col gap-5">
+        <div className="border border-primary lg:w-[450px] lg:m-auto m-5 p-4 rounded flex flex-col gap-5">
           <Input
             label="First Name"
             placeholder="John"
@@ -56,15 +71,15 @@ const CreateContact = ({ edit }: any) => {
             name="lastName"
           />
 
-          <div className="flex items-center lg:gap-[85px]">
+          <div className="flex items-center lg:gap-[85px] md:justify-between gap-12">
             <p className="text-primary font-medium">Status</p>
 
             <div className="w-[100px]">
               <RadioButton
-                name="type"
-                onChange={handleChange}
+                // name="status"
+                onChange={handleRadio}
                 items={radioItems}
-                defaultValue={params.status}
+                defaultValue={edit ? state.status : params?.status}
               />
             </div>
           </div>
