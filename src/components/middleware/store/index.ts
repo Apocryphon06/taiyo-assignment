@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
+import { showToastMessage } from "../../utils/helpers";
 
 export interface Contact {
   id: number;
@@ -27,29 +28,21 @@ const contactSlice: any = createSlice({
   reducers: {
     addContact: (state, action: PayloadAction<Contact>) => {
       state.items.push(action.payload);
+      showToastMessage("Contact created.", "success");
     },
     removeContact: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((todo) => todo.id !== action.payload);
+      showToastMessage("Contact deleted.", "error");
     },
     updateContact: (state, action: PayloadAction<Contact>) => {
-      //    state.items.filter((item)=>{
-      //     if(item.id  === action?.payload?.id){
-      //         item.firstName = action?.payload?.firstName
-      //         item.lastName = action?.payload?.lastName
-      //         item.status = action?.payload?.status
-      //     }
-      //   })
-
-      console.log(action.payload, "at slice");
-
       const index = state.items.findIndex(
         (item) => item.id === action.payload.id
       );
       if (index !== -1) {
         state.items[index] = action.payload;
-        console.log(state.items[index])
+        console.log(state.items[index]);
       }
-      
+      showToastMessage("Contact details updated.", "success");
     },
   },
 });

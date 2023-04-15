@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "./Button";
 import { removeContact } from "./middleware/store";
 
-const Card = ({ details, deleteContact }: any) => {
+const Card = ({ details }: any) => {
   const dispatch = useDispatch();
 
   return (
