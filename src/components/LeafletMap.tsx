@@ -1,7 +1,7 @@
-import axios from "axios";
-import { nanoid } from "nanoid";
-import React from "react";
-import { useQueries, useQuery } from "react-query";
+// import axios from "axios";
+// import { nanoid } from "nanoid";
+// import React from "react";
+import { useQuery } from "react-query";
 
 const LeafletMap = () => {
   const {
