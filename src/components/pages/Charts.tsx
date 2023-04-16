@@ -97,11 +97,11 @@ const Charts = () => {
       <div className="lg:w-[1190px] w-full flex flex-col justify-center items-center">
         {!content ? (
           <div className="flex items-center gap-5">
-            <p className="p-4 text-lg text-cyan uppercase cursor-pointer font-medium">
+            <p className="p-4 text-base text-cyan uppercase cursor-pointer font-medium">
               Line Graph
             </p>
             <p
-              className="p-4 text-lg text-primary uppercase cursor-pointer font-medium"
+              className="p-4 text-base text-primary uppercase cursor-pointer font-medium"
               onClick={toggle}
             >
               Leaflet Map
@@ -110,12 +110,12 @@ const Charts = () => {
         ) : (
           <div className="flex items-center gap-5">
             <p
-              className="p-4 text-lg text-primary uppercase cursor-pointer font-medium"
+              className="p-4 text-base text-primary uppercase cursor-pointer font-medium"
               onClick={toggle}
             >
               Line Graph
             </p>
-            <p className="p-4 text-lg text-cyan uppercase ursor-pointer font-medium">
+            <p className="p-4 text-base text-cyan uppercase ursor-pointer font-medium">
               Leaflet Map
             </p>
           </div>

@@ -4,6 +4,6 @@
 
 .map {
   overflow: auto;
-  height: 500px;
-  @apply  lg:w-[900px] w-screen
+  
+  @apply lg:w-[900px] w-screen lg:h-[500px] h-screen
 }
