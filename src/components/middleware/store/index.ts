@@ -10,9 +10,9 @@ export interface Contact {
   status: string;
 }
 
-interface RootState {
-  todos: Contact[];
-}
+// interface RootState {
+//   todos: Contact[];
+// }
 
 interface ContactState {
   items: Contact[];

@@ -2,4 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-#map { height: 180px; }
+.map {
+  overflow: auto;
+  height: 500px;
+  @apply  lg:w-[900px] w-screen
+}
