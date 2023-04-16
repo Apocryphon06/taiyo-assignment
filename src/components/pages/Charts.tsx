@@ -1,8 +1,8 @@
+/* eslint-disable */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import ApexChart from "../ApexChart";
-import LineChart from "../ApexLineChart";
 import LeafletMap from "../LeafletMap";
 import Sidebar from "../Sidebar";
 

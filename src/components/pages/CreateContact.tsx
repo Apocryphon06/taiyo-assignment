@@ -3,10 +3,12 @@ import Sidebar from "../Sidebar";
 import Button from "../Button";
 import Input from "../Input";
 import RadioButton from "../RadioButton";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addContact } from "../middleware/store";
 import { updateContact } from "../middleware/store";
+import { showToastMessage } from "../utils/helpers";
+import { nanoid } from "nanoid";
 
 const radioItems = [
   {
@@ -20,15 +22,14 @@ const radioItems = [
 ];
 
 const CreateContact = ({ edit }: any) => {
-
   // getting data from Link component for edit contact
   const { state } = useLocation();
-  
+
   console.log(state, "from edit route");
 
   const dispatch = useDispatch();
 
-  // settings current contact details 
+  // settings current contact details
   useEffect(() => {
     setParams({
       firstName: state?.firstName,
@@ -58,14 +59,32 @@ const CreateContact = ({ edit }: any) => {
     setParams({ ...params, status: e.target.value });
   };
 
+  const navigate = useNavigate();
+
   // to create a new contact
   const handleSubmit = () => {
-    dispatch(addContact(params));
+    // console.log(params)
+    // if (
+    //   params?.firstName === "" ||
+    //   params?.lastName == "" ||
+    //   params?.status == ""
+    // ) {
+    //   showToastMessage("Please enter valid details", "error");
+    //   return;
+    // }
+    // else{
+    //   dispatch(addContact({ ...params, id: nanoid() }));
+    //   navigate('/contacts')
+    // }
+
+    dispatch(addContact({ ...params, id: nanoid() }));
+    navigate("/contacts");
   };
 
   // to update the existing contact details
   const handleUpdate = () => {
     dispatch(updateContact({ ...params, id: state.id }));
+    navigate("/contacts");
   };
 
   return (
@@ -107,13 +126,13 @@ const CreateContact = ({ edit }: any) => {
           </div>
 
           <div className="flex justify-center items-center">
-            <Link to="/contacts">
-              <Button
-                onClick={edit ? handleUpdate : handleSubmit}
-                text={edit ? "Update" : "Submit"}
-                width="lg:w-[300px] rounded"
-              />
-            </Link>
+            {/* <Link to="/contacts"> */}
+            <Button
+              onClick={edit ? handleUpdate : handleSubmit}
+              text={edit ? "Update" : "Submit"}
+              width="lg:w-[300px] rounded"
+            />
+            {/* </Link> */}
           </div>
         </div>
       </div>
